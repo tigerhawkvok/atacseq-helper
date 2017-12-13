@@ -41,8 +41,6 @@ autoreconf
 ./configure
 make
 make install
-pip3 install Pysam
-pip install Pysam
 # Install Bedtools
 brew tap homebrew/science
 brew install bedtools
@@ -72,3 +70,6 @@ pip3 install rpy2 # Incompatible with 2.x
 # Environment
 alias python=python3
 echo 'alias python=python3' >> ~/.bash_profile # Really, it's 2017, you shouldn't be running Python 2.x
+conda config --add channels r
+conda config --add channels bioconda
+conda install pysam

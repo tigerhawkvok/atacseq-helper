@@ -12,7 +12,10 @@ The script `install-dependencies.sh` assumes you have that available.
 
 ## Setup
 
-Once you've cloned or downloaded this repository, drop all its files into the root directory containing your files needing analysis. That's all!
+1. Once you've cloned or downloaded this repository, drop all its files into the root directory containing your files needing analysis.
+2. Go to https://conda.io/miniconda.html , download, and run the installer appropriate for your platform. (The OSX installer is included in this repo)
+
+That's all!
 
 ## Configuration
 
