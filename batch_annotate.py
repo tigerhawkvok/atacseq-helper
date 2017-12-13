@@ -1,5 +1,11 @@
 #!python3
+"""
+Emulates an actually functional version of
+batch_annotate.pl
 
+With more "let's not try to do things already done"!
+"""
+import rpy2
 import rpy2.robjects as robjects
 import os
 import glob
