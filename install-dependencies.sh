@@ -46,4 +46,5 @@ pip install pyDNase
 pip3 install htseq
 pip install htseq
 # Install rpy
+brew install llvm
 pip3 install rpy2 # Incompatible with 2.x
