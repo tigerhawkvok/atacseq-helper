@@ -1,3 +1,7 @@
 *.bed
 *.sam
 *.bam
+*.bai
+*_profile.pdf
+AT-*
+pyDNase/*
