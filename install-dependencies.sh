@@ -45,3 +45,5 @@ pip install pyDNase
 # Install htseq
 pip3 install htseq
 pip install htseq
+# Install rpy
+pip3 install rpy2 # Incompatible with 2.x
