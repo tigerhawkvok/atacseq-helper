@@ -1,7 +1,7 @@
 ######## Peak annotation ###########
 infiles <- "" ###### PUT PATH TO .BED FILES CONVERTED FOR ANNOTATION HERE - BETWEEN "".#####
 
-out.folder <- "" ###### PUT PATH TO FOLDER WHERE YOU WANT YOUR ANNOTATION FILES TO GO ########
+out.folder <- "$$REPLACE_OUT_DIR$$" ###### PUT PATH TO FOLDER WHERE YOU WANT YOUR ANNOTATION FILES TO GO ########
 
 files <- list.files(infiles,full=TRUE)
 
@@ -13,7 +13,7 @@ biocLite(c("rtracklayer", "ChIPpeakAnno", "GenomicFeatures"));
 library("ChIPpeakAnno");
 library("GenomicFeatures");
 library("rtracklayer");
-txdb <- loadDb("~/Downloads/Slycopersicum310.sqlite")
+txdb <- loadDb("./Slycopersicum310.sqlite")
 ge <- genes(txdb, columns=c("tx_name", "gene_id", "tx_type"))
 for(i in 1:length(files)){
     peaksGR <- import(files[i])
