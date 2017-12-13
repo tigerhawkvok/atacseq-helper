@@ -68,8 +68,8 @@ export LD_LIBRARY_PATH=/usr/local/opt/llvm/lib:$LD_LIBRARY_PATH
 export LIBRARY_PATH=/usr/local/opt/llvm/lib:$LIBRARY_PATH
 pip3 install rpy2 # Incompatible with 2.x
 # Environment
-alias python=python3
-echo 'alias python=python3' >> ~/.bash_profile # Really, it's 2017, you shouldn't be running Python 2.x
+export PATH="$HOME/miniconda3/bin:$PATH"
+echo 'export PATH="$HOME/miniconda3/bin:$PATH"' >> ~/.bash_profile
 conda config --add channels r
 conda config --add channels defaults
 conda config --add channels conda-forge
