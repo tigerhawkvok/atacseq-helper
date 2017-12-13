@@ -71,5 +71,7 @@ pip3 install rpy2 # Incompatible with 2.x
 alias python=python3
 echo 'alias python=python3' >> ~/.bash_profile # Really, it's 2017, you shouldn't be running Python 2.x
 conda config --add channels r
+conda config --add channels defaults
+conda config --add channels conda-forge
 conda config --add channels bioconda
 conda install pysam
