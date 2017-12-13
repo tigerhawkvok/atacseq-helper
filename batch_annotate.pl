@@ -10,7 +10,7 @@ die "usage: batch_annotate.pl <Output prefix to put in front of bed and annotate
 `mkdir $ARGV[0]_BED_FILES`;
 `mkdir $ARGV[0]_ANNOTATION_FILES`;
 
-my $c =`ls $ARGV[0]`;
+my $c =`ls ./`;
 my @array = split(/\n/, $c);
 
 `mv *.merged.bed $ARGV[0]_BED_FILES`;
@@ -35,7 +35,7 @@ foreach my $files (@arrays){
 
     print "annotating file = $dirname\n";
 
-    $R->set(`infile`,$dirname");
+    $R->set(`infile`,$dirname);
     $R->run(q`print(infile)`);
     $R->run(q`peaksGR<-import(infile)`);
     $R->run(q`annotatedPeak<-annotatePeakInBatch(peaksGR, AnnotationData=genes(txdb))`);
