@@ -5,12 +5,16 @@
 # Make sure you do so that your system is ready
 # to run this file! Just one or two commands
 # that are platform-specific.
+#
+# If you've already installed some dependencies,
+# you can just execute the bits between the comments.
 #####################
 brew update
+# Install wget. We use this to download a few things.
 brew install wget
 # Install Python3
 brew install python3
-# Install perl
+# Install perl5 (OSX's perl is out of date)
 brew install perl
 PATH=/usr/local/Cellar/perl/perl5/bin:$PATH
 echo 'export PATH="/usr/local/Cellar/perl/perl5/bin:$PATH"' >> ~/.bash_profile
@@ -20,13 +24,12 @@ python3 get-pip.py
 python get-pip.py
 # Install R
 brew install R
-## Install Homer and cpanm
+# Install statistics package
+~/perl5/bin/cpanm Statisics::R
+# Install Homer
 mkdir ~/homerdl
 cd ~/homerdl
 wget http://homer.ucsd.edu/homer/configureHomer.pl
-# Install cpanm
-~/perl5/bin/cpanm Statisics::R
-# Install homer
 perl configureHomer.pl -install
 # Install Samtools
 brew install autoconf
