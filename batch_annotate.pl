@@ -28,10 +28,10 @@ $R->run(q`txdb<-loadDb("./Slycopersicum310.sqlite")`);
 $R->run(q`ge<- genes(txdb, columns=c("tx_name", "gene_id", "tx_type"))`);
 
 print "Working on annontating bed files.\n\n";
-
+use Cwd qw(getcwd);
 foreach my $files (@arrays){
 
-    my $dirname = dirname($files);
+    my $dirname = $files; #dirname(getcwd);
 
     print "annotating file = $dirname\n";
 
