@@ -11,6 +11,8 @@ PATH=/usr/local/Cellar/perl/perl5/bin:$PATH
 wget https://bootstrap.pypa.io/get-pip.py
 python3 get-pip.py
 python get-pip.py
+# Install R
+brew install R
 ## Install Homer and cpanm
 mkdir ~/homerdl
 cd ~/homerdl
@@ -35,6 +37,11 @@ brew install bedtools
 # Install Scipy packages
 python3 -m pip install --user numpy scipy matplotlib ipython jupyter pandas sympy nose
 python -m pip install --user numpy scipy matplotlib ipython jupyter pandas sympy nose
+# Install pyDNase and its dependencies
+pip3 install clint
+pip install clint
+pip3 install pyDNase
+pip install pyDNase
 # Install htseq
 pip3 install htseq
 pip install htseq
