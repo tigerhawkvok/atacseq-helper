@@ -31,6 +31,8 @@ fileSets = [
 
 for i, filePair in enumerate(fileSets):
     print("Counting file "+str(i+1)+" of "+str(len(fileSets)))
+    # Default arguments and argument order interpreted from here:
+    # https://github.com/simon-anders/htseq/blob/41ac2e51f64a1fb38129ceabf0f06a3e0e37825e/python3/HTSeq/scripts/count.py#L345-L455
     outputString = count.count_reads_in_features(
         filePair[0],
         filePair[1],
