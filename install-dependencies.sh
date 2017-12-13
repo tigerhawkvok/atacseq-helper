@@ -50,4 +50,5 @@ brew install llvm
 echo /usr/local/opt/llvm/lib/python2.7/site-packages >> /usr/local/lib/python2.7/site-packages/llvm.pth
 mkdir -p ~/Library/Python/2.7/lib/python/site-packages
 echo 'import site; site.addsitedira("/usr/local/lib/python2.7/site-packages")' >> ~/Library/Python/2.7/lib/python/site-packages/homebrew.pth
+echo 'export PATH="/usr/local/opt/llvm/bin:$PATH"' >> ~/.bash_profile
 pip3 install rpy2 # Incompatible with 2.x
