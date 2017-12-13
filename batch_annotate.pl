@@ -5,7 +5,7 @@ use warnings;
 use Statistics::R;
 use File::Basename;
 #### As of 9/1/17 not 100% bug free. - AY I will get to it though!!! ####
-die "usage: batch_annotate.pl <Path to folder with peak files> <Output prefix to put in front of bed and annotated folders>\n" unless @ARGV==1;
+die "usage: batch_annotate.pl <Output prefix to put in front of bed and annotated folders>\n" unless @ARGV==1;
 
 `mkdir $ARGV[0]_BED_FILES`;
 `mkdir $ARGV[0]_ANNOTATION_FILES`;
