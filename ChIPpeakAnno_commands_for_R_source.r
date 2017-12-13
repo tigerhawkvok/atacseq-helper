@@ -1,5 +1,5 @@
 ######## Peak annotation ###########
-infiles <- "" ###### PUT PATH TO .BED FILES CONVERTED FOR ANNOTATION HERE - BETWEEN "".#####
+infiles <- "$$REPLACE_OUT_DIR$$" ###### PUT PATH TO .BED FILES CONVERTED FOR ANNOTATION HERE - BETWEEN "".#####
 
 out.folder <- "$$REPLACE_OUT_DIR$$" ###### PUT PATH TO FOLDER WHERE YOU WANT YOUR ANNOTATION FILES TO GO ########
 
