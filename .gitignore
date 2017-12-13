@@ -7,3 +7,7 @@ AT-*
 pyDNase/*
 pyDNase
 pyDNase/
+*.gff3
+CountingResults
+CountingResults/
+CountingResults/*
