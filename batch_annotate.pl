@@ -24,7 +24,7 @@ $R->run(q`biocLite(c("rtracklayer", "ChIPpeakAnno", "GenomicFeatures"))`);
 $R->run(q`library("rtracklayer")`);
 $R->run(q`library("ChIPpeakAnno")`);
 $R->run(q`library("GenomicFeatures")`);
-$R->run(q`txdb<-loadDb("~/Downloads/Slycopersicum310.sqlite")`);
+$R->run(q`txdb<-loadDb("./Slycopersicum310.sqlite")`);
 $R->run(q`ge<- genes(txdb, columns=c("tx_name", "gene_id", "tx_type"))`);
 
 print "Working on annontating bed files.\n\n";
