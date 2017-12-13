@@ -99,5 +99,5 @@ htseq-count -m union -s no --nonunique all -i gene_id -t exon -f bam AT-A-10_S4_
 
  mkdir CountingResults
 
- cp *counts.txt CountingResults/
+ mv *counts.txt CountingResults/
 
