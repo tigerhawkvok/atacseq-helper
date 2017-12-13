@@ -1,5 +1,11 @@
 #!/bin/bash
-
+#####################
+# Have you read the README?
+#
+# Make sure you do so that your system is ready
+# to run this file! Just one or two commands
+# that are platform-specific.
+#####################
 brew update
 brew install wget
 # Install Python3
