@@ -31,6 +31,7 @@ with open("./ChIPpeakAnno_commands_for_R_source.r", "r") as rSource:
     #
     # See:
     # https://rpy2.readthedocs.io/en/version_2.8.x/introduction.html#evaluating-r-code
+    print("\n\n\nAbout to run:\n\n"+realRCode+"\n\n")
     robjects.r(realRCode)
 print("R is done processing the directory")
 os.system("mv "+bedFileDir+"/*.xls "+annotationDir)
