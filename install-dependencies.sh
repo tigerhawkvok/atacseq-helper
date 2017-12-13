@@ -13,6 +13,7 @@ brew install python3
 # Install perl
 brew install perl
 PATH=/usr/local/Cellar/perl/perl5/bin:$PATH
+echo 'export PATH="/usr/local/Cellar/perl/perl5/bin:$PATH"' >> ~/.bash_profile
 # Install pip
 wget https://bootstrap.pypa.io/get-pip.py
 python3 get-pip.py
