@@ -41,6 +41,8 @@ autoreconf
 ./configure
 make
 make install
+pip3 install Pysam
+pip install Pysam
 # Install Bedtools
 brew tap homebrew/science
 brew install bedtools
