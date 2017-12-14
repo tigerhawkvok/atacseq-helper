@@ -42,9 +42,10 @@ from contextlib import redirect_stdout
 
 dirName = "./CountingResults"
 if not os.path.exists(dirName):
+    # The output directory doesn't exist yet
     os.mkdir(dirName)
 else:
-    # The output directory doesn't exist yet
+    # It already exists
     if overwriteExistingCounts:
         i = 0
         for oldRead in glob.glob(dirName+"/*counts.txt"):
