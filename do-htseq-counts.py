@@ -67,6 +67,8 @@ for i, filePair in enumerate(fileSets):
         10, # default
         "" # default
         )
+    ## Issue mentioned by Marko
+    #outputString.replace("\n\t", ", ")
     gff3 = filePair[1][:-5]
     outFile = gff3 + "-" + filePair[2] + "-counts.txt"
     fullPath = dirName+"/"+outFile
