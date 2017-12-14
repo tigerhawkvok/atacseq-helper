@@ -76,6 +76,7 @@ for gff3File in gff3Pool:
             filePool -= 1
             print("FILE EXISTS: `"+outFile+"`. Skipping.")
             badFileList.append([bamFile, "Counts already exist"])
+            continue
         print("Counting file "+str(i + 1)+" of "+str(filePool))
         speciesMatch = label.split("_").pop(0)
         if not speciesMatch in gff3File and len(speciesMatch) > 0:
