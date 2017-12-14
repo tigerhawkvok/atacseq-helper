@@ -137,9 +137,9 @@ for gff3File in gff3Pool:
                 didBreak = True
                 break
             except Exception as e:
-                print("HTSeq error processing file: "+str(e))
+                print("\t\tHTSeq error processing file: "+str(e))
                 badFileList.append([bamFile, str(e)])
-                print("Trying next file...")
+                print("\t\tTrying next file...")
                 continue
         if didBreak:
             break
