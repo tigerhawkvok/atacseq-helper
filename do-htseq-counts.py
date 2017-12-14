@@ -12,6 +12,7 @@ https://github.com/simon-anders/htseq/blob/41ac2e51f64a1fb38129ceabf0f06a3e0e378
 from HTSeq.scripts import count
 import os
 import glob
+import re
 import io
 from contextlib import redirect_stdout
 
@@ -45,6 +46,8 @@ i = 0
 gff3Pool = glob.glob("*.gff3")
 # Get the total file count
 filePool = len(gff3Pool) * len(bamPrettyMap)
+badFileList = list()
+cleanupAlignmentMessages = re.compile("^[0-9]+ .*?processed\.$")
 for gff3File in gff3Pool:
     # Map every gff3 onto every bam file
     print("Doing counts against `"+gff3File+"`")
@@ -62,6 +65,7 @@ for gff3File in gff3Pool:
         print("\tUsing BAM file `"+bamFile+"`")
         if not os.path.exists(bamFile):
             print("\t\tThe system couldn't locate the file, trying the next one ...")
+            badFileList.append([bamFile,"Does Not Exist"])
             continue
         samPass = [bamFile]
         # We need to redirect stdout to a buffer to write a string
@@ -69,32 +73,51 @@ for gff3File in gff3Pool:
         # https://stackoverflow.com/a/22434594/6860368
         outputString = ""
         with io.StringIO() as buf, redirect_stdout(buf):
-            count.count_reads_in_features(
-                samPass, # BAM file
-                gff3File, # GFF3 file
-                "bam", # -f flag
-                "name", # default
-                30000000, # default
-                "no", # -s flag
-                "union", # -m flag
-                "all", # --nonunique flag
-                "score", # default
-                "score", # default
-                "exon", # -t flag
-                "gene_id", # -i flag, default
-                (), # Default
-                None, # default
-                10, # default
-                "" # default
-                )
-            outputString = buf.getvalue()
+            try:
+                count.count_reads_in_features(
+                    samPass, # BAM file
+                    gff3File, # GFF3 file
+                    "bam", # -f flag
+                    "name", # default
+                    30000000, # default
+                    "no", # -s flag
+                    "union", # -m flag
+                    "all", # --nonunique flag
+                    "score", # default
+                    "score", # default
+                    "exon", # -t flag
+                    "gene_id", # -i flag, default
+                    (), # Default
+                    None, # default
+                    10, # default
+                    "" # default
+                    )
+                outputString = buf.getvalue()
+            except KeyboardInterrupt:
+                # We want this to really interrupt
+                raise
+            except Exception as e:
+                print("HTSeq error processing file: "+str(e))
+                badFileList.append([bamFile, str(e)])
+                print("Trying next file...")
+                continue
         ## Issue mentioned by Marko
         #outputString.replace("\n\t", ", ")
+        # Remove messages
+        outputStringClean = cleanupAlignmentMessages.sub("", outputString).strip()
         gff3 = gff3File[:-5]
         outFile = gff3 + "-" + label + "-counts.txt"
         fullPath = dirName+"/"+outFile
         with open(fullPath, "w") as fileWriter:
-            fileWriter.write(outputString)
+            fileWriter.write(outputStringClean.trim())
             print("Wrote counts to `"+fullPath+"`")
     print("Finish processing "+gff3File)
+successfulFiles = i - len(badFileList)
+print("Successfully processed "+str(successfulFiles)+" files")
+if len(badFileList) > 0:
+    print(str(len(badFileList))+" files did not process correctly")
+    print("Please check these files and try them again:")
+    import tabulate
+    tableMessage = tabulate(badFileList, headers=["File", "Error"], tablefmt="grid")
+    print(tableMessage)
 print("Script complete")

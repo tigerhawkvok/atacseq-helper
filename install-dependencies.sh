@@ -55,6 +55,7 @@ pip install pyDNase
 # Install htseq
 pip3 install htseq
 pip install htseq
+pip install tabulate
 # Install rpy
 brew install llvm
 # echo /usr/local/opt/llvm/lib/python2.7/site-packages >> /usr/local/lib/python2.7/site-packages/llvm.pth
