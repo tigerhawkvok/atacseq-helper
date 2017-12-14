@@ -14,7 +14,7 @@ import os
 import glob
 
 
-dirName = "CountingResults"
+dirName = "./CountingResults"
 if not os.path.exists(dirName):
     os.mkdir(dirName)
 else:
@@ -22,7 +22,7 @@ else:
     for oldRead in glob.glob(dirName+"/*counts.txt"):
         os.unlink(oldRead)
         i += 1
-    print("Removed "+str(i)+" old reads")
+    print("Removed "+str(i)+" old counted reads")
 
 
 # Args given:
