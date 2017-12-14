@@ -52,20 +52,21 @@ for i, filePair in enumerate(fileSets):
     outputString = count.count_reads_in_features(
         filePair[0], # BAM file
         filePair[1], # GFF3 file
-        "bam",
-        "name",
-        30000000,
-        "no",
-        "union",
-        "all",
-        "score",
-        "score",
-        "exon",
-        "gene_id",
-        (),
-        None,
-        10,
-        "")
+        "bam", # -f flag
+        "name", # default
+        30000000, # default
+        "no", # -s flag
+        "union", # -m flag
+        "all", # --nonunique flag
+        "score", # default
+        "score", # default
+        "exon", # -t flag
+        "gene_id", # -i flag, default
+        (), # Default
+        None, # default
+        10, # default
+        "" # default
+        )
     gff3 = filePair[1][:-5]
     outFile = gff3 + "-" + filePair[2] + "-counts.txt"
     fullPath = dirName+"/"+outFile
