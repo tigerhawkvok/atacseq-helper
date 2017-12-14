@@ -35,7 +35,8 @@ else:
 fileSets = [
     # Format:
     # ["bamfile", "gff3", "label"]
-    ["AT-A-10_S4_L001_BowtieOut.sorted.q2.bam", "M-LYR-IN-11-CONTROLandDROUGHT.gff3", "CON1"]
+    ["AT-A-10_S4_L001_BowtieOut.sorted.q2.bam", "M-LYR-IN-11-CONTROLandDROUGHT.gff3", "CON1"],
+    ["AT-B-38_S22_BowtieOut.sorted.q2.bam", "M-LYR-IN-11-CONTROLandDROUGHT.gff3", "CON2"]
 ]
 
 
