@@ -59,8 +59,12 @@ for gff3File in gff3Pool:
         # htseq-count -m union -s no --nonunique all -i gene_id -t exon -f bam AT-A-10_S4_L001_BowtieOut.sorted.q2.bam M-LYR-IN-11-CONTROLandDROUGHT.gff3 > M-LYR-IN-11-CONandDROUGHT-CON1-counts.txt
         ############################################
         print("\tUsing BAM file `"+bamFile+"`")
+        if not os.path.exists(bamFile):
+            print("\t\tThe system couldn't locate the file, trying the next one ...")
+            continue
+        samPass = [bamFile]
         outputString = count.count_reads_in_features(
-            list(bamFile), # BAM file
+            samPass, # BAM file
             gff3File, # GFF3 file
             "bam", # -f flag
             "name", # default
