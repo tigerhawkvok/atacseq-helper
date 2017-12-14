@@ -75,7 +75,7 @@ for gff3File in gff3Pool:
         outFile = gff3 + "-" + label + "-counts.txt"
         if os.path.exists(outFile):
             filePool -= 1
-            print("FILE EXISTS: `"+outFile+"`. Skipping.")
+            print("\tFILE EXISTS: `"+outFile+"`. Skipping.")
             badFileList.append([bamFile, "Counts already exist"])
             continue
         print("Counting file "+str(i + 1)+" of "+str(filePool))
