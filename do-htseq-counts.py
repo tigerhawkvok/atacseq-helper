@@ -46,9 +46,10 @@ gff3Pool = glob.glob("*.gff3")
 filePool = len(gff3Pool) * len(bamPrettyMap)
 for gff3File in gff3Pool:
     # Map every gff3 onto every bam file
+    print("Doing counts against `"+gff3File+"`")
     for label, bamFile in bamPrettyMap.items():
         i += 1
-        print("Counting file "+str(i+1)+" of "+str(filePool))
+        print("Counting file "+str(i)+" of "+str(filePool))
         ############################################
         # Default arguments and argument order interpreted from here:
         # https://github.com/simon-anders/htseq/blob/41ac2e51f64a1fb38129ceabf0f06a3e0e37825e/python3/HTSeq/scripts/count.py#L345-L455
@@ -57,8 +58,9 @@ for gff3File in gff3Pool:
         #
         # htseq-count -m union -s no --nonunique all -i gene_id -t exon -f bam AT-A-10_S4_L001_BowtieOut.sorted.q2.bam M-LYR-IN-11-CONTROLandDROUGHT.gff3 > M-LYR-IN-11-CONandDROUGHT-CON1-counts.txt
         ############################################
+        print("\tUsing BAM file `"+bamFile+"`")
         outputString = count.count_reads_in_features(
-            bamFile, # BAM file
+            list(bamFile), # BAM file
             gff3File, # GFF3 file
             "bam", # -f flag
             "name", # default
