@@ -13,8 +13,19 @@ https://github.com/simon-anders/htseq/blob/41ac2e51f64a1fb38129ceabf0f06a3e0e378
 # Label mapping: mandatory configuration needed!
 
 bamPrettyMap = {
-    "CON1": "AT-A-10_S4_L001_BowtieOut.sorted.q2.bam",
-    "CON2": "AT-B-38_S22_BowtieOut.sorted.q2.bam"
+    "LYR_CD_CON1": "AT-A-10_S4_L001.sorted.q2.bam",
+    "LYR_CD_CON2": "AT-A-11_S9_BowtieOut.sorted.q2.bam",
+    "LYR_CD_CON3": "AT-B-38_S22_BowtieOut.sorted.q2.bam",
+    "LYR_CD_DR1": "AT-A-16_S1_BowtieOut.sorted.q2.bam",
+    "LYR_CD_DR2":"AT-A-18_S6_BowtieOut.sorted.q2.bam",
+    "LYR_CD_DR3": "AT-B-17_S24_BowtieOut.sorted.q2.bam",
+    "LYR_CW_CON1":"AT-A-10_S4_L001_BowtieOut.sorted.q2.bam",
+    "LYR_CW_CON2":"AT-A-11_S9_BowtieOut.sorted.q2.bam",
+    "LYR_CW_CON3":"AT-B-38_S22_BowtieOut.sorted.q2.bam",
+    "LYR_CW_WL1" :"AT-A-14_S11_BowtieOut.sorted.q2.bam",
+    "LYR_CW_WL2" :"AT-A-15_S5_BowtieOut.sorted.q2.bam",
+    "LYR_CW_WL3": "AT-B-13_S23_BowtieOut.sorted.q2.bam"
+
 }
 
 
@@ -54,6 +65,10 @@ for gff3File in gff3Pool:
     print("Doing counts against `"+gff3File+"`")
     for label, bamFile in bamPrettyMap.items():
         print("Counting file "+str(i + 1)+" of "+str(filePool))
+        speciesMatch = label.split("_").pop(0)
+        if not speciesMatch in gff3File:
+            print("\tSpecies "+speciesMatch+" does not match GFF3 `"+gff3File+"`, skipping")
+            continue
         ############################################
         # Default arguments and argument order interpreted from here:
         # https://github.com/simon-anders/htseq/blob/41ac2e51f64a1fb38129ceabf0f06a3e0e37825e/python3/HTSeq/scripts/count.py#L345-L455
@@ -116,6 +131,7 @@ for gff3File in gff3Pool:
         ## Issue mentioned by Marko
         #outputString.replace("\n\t", ", ")
         # Remove messages
+        print("\tTidying up the file...")
         outputStringClean = cleanupAlignmentMessages.sub("", outputString).strip()
         gff3 = gff3File[:-5]
         outFile = gff3 + "-" + label + "-counts.txt"
