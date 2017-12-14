@@ -45,13 +45,15 @@ gff3Pool = glob.glob("*.gff3")
 # Get the total file count
 filePool = len(gff3Pool) * len(bamPrettyMap)
 badFileList = list()
-cleanupAlignmentMessages = re.compile("^[0-9]+ .*?processed\.$")
+cleanupAlignmentMessages = re.compile(r"^[0-9]+ .*?processed\.$")
+didBreak = False
 for gff3File in gff3Pool:
     # Map every gff3 onto every bam file
+    if didBreak:
+        break
     print("Doing counts against `"+gff3File+"`")
     for label, bamFile in bamPrettyMap.items():
-        i += 1
-        print("Counting file "+str(i)+" of "+str(filePool))
+        print("Counting file "+str(i + 1)+" of "+str(filePool))
         ############################################
         # Default arguments and argument order interpreted from here:
         # https://github.com/simon-anders/htseq/blob/41ac2e51f64a1fb38129ceabf0f06a3e0e37825e/python3/HTSeq/scripts/count.py#L345-L455
@@ -99,14 +101,18 @@ for gff3File in gff3Pool:
                     "" # default
                     )
                 outputString = buf.getvalue()
+                i += 1
             except KeyboardInterrupt:
                 # We want this to really interrupt
-                raise
+                didBreak = True
+                break
             except Exception as e:
                 print("HTSeq error processing file: "+str(e))
                 badFileList.append([bamFile, str(e)])
                 print("Trying next file...")
                 continue
+        if didBreak:
+            break
         ## Issue mentioned by Marko
         #outputString.replace("\n\t", ", ")
         # Remove messages
@@ -118,12 +124,12 @@ for gff3File in gff3Pool:
             fileWriter.write(outputStringClean.trim())
             print("Wrote counts to `"+fullPath+"`")
     print("Finish processing "+gff3File)
-successfulFiles = i - len(badFileList)
-print("Successfully processed "+str(successfulFiles)+" files")
+# Final output
+print("Successfully processed "+str(i)+" files")
 if len(badFileList) > 0:
     print(str(len(badFileList))+" files did not process correctly")
     print("Please check these files and try them again:")
-    import tabulate
+    from tabulate import tabulate
     tableMessage = tabulate(badFileList, headers=["File", "Error"], tablefmt="grid")
     print(tableMessage)
 print("Script complete")
