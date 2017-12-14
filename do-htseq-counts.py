@@ -9,6 +9,17 @@ https://github.com/simon-anders/htseq/blob/41ac2e51f64a1fb38129ceabf0f06a3e0e378
 @author Philip Kahn
 @date 2017.12.13
 """
+
+# Label mapping: mandatory configuration needed!
+
+bamPrettyMap = {
+    "CON1": "AT-A-10_S4_L001_BowtieOut.sorted.q2.bam",
+    "CON2": "AT-B-38_S22_BowtieOut.sorted.q2.bam"
+}
+
+
+# Main script
+
 from HTSeq.scripts import count
 import os
 import glob
@@ -26,19 +37,6 @@ else:
         i += 1
     print("Removed "+str(i)+" old counted reads")
 
-
-# Args given:
-# -m union
-# -s no
-# --nonunique all
-# -i gene_id
-# -t exon
-# -f bam
-
-bamPrettyMap = {
-    "CON1": "AT-A-10_S4_L001_BowtieOut.sorted.q2.bam",
-    "CON2": "AT-B-38_S22_BowtieOut.sorted.q2.bam"
-}
 
 
 i = 0
@@ -61,6 +59,14 @@ for gff3File in gff3Pool:
         # Sample:
         #
         # htseq-count -m union -s no --nonunique all -i gene_id -t exon -f bam AT-A-10_S4_L001_BowtieOut.sorted.q2.bam M-LYR-IN-11-CONTROLandDROUGHT.gff3 > M-LYR-IN-11-CONandDROUGHT-CON1-counts.txt
+        #
+        # Args given:
+        # -m union
+        # -s no
+        # --nonunique all
+        # -i gene_id
+        # -t exon
+        # -f bam
         ############################################
         print("\tUsing BAM file `"+bamFile+"`")
         if not os.path.exists(bamFile):

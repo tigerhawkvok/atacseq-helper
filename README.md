@@ -45,7 +45,7 @@ to configure your dependencies.
 To convert your gzipped or unzipped `SAM` files to binary, peak, index, and bedfiles, run:
 
 ```bash
-python3 ./samlooper.py
+python ./samlooper.py
 ```
 
 This script has a single configuration variable: at the top, set `DO_FOOTPRINTING` to `True` if you want to analyse footprints and profiles, and `False` otherwise.
@@ -60,3 +60,24 @@ TODO
 ## Annotating Bedfiles
 
 TODO
+
+
+## Running Counts
+
+Be sure you've generated your bedfiles -- they also generate the sorted q2 `*.bam` files you need to get this part going.
+
+You'll need to edit `do-htseq-counts.py`. Near the top of the file, after the docstring, you'll find a [python `dictionary` datatype object](https://docs.python.org/3/tutorial/datastructures.html#dictionaries) named `bamPrettyMap`.
+
+Edit this file to set the labels you desire as the dictionary key, and the  `*.sorted.q2.bam` filename as the key, for example:
+
+```python
+bamPrettyMap = {
+    "CON1": "AT-A-10_S4_L001_BowtieOut.sorted.q2.bam",
+    "CON2": "AT-B-38_S22_BowtieOut.sorted.q2.bam"
+}
+```
+Then, once you've done that, simply run
+
+```bash
+python ./do-htseq-counts.py
+```
