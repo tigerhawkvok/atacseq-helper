@@ -12,7 +12,8 @@ https://github.com/simon-anders/htseq/blob/41ac2e51f64a1fb38129ceabf0f06a3e0e378
 from HTSeq.scripts import count
 import os
 import glob
-
+import io
+from contextlib import redirect_stdout
 
 dirName = "./CountingResults"
 if not os.path.exists(dirName):
@@ -63,24 +64,30 @@ for gff3File in gff3Pool:
             print("\t\tThe system couldn't locate the file, trying the next one ...")
             continue
         samPass = [bamFile]
-        outputString = count.count_reads_in_features(
-            samPass, # BAM file
-            gff3File, # GFF3 file
-            "bam", # -f flag
-            "name", # default
-            30000000, # default
-            "no", # -s flag
-            "union", # -m flag
-            "all", # --nonunique flag
-            "score", # default
-            "score", # default
-            "exon", # -t flag
-            "gene_id", # -i flag, default
-            (), # Default
-            None, # default
-            10, # default
-            "" # default
-            )
+        # We need to redirect stdout to a buffer to write a string
+        # See:
+        # https://stackoverflow.com/a/22434594/6860368
+        outputString = ""
+        with io.StringIO() as buf, redirect_stdout(buf):
+            count.count_reads_in_features(
+                samPass, # BAM file
+                gff3File, # GFF3 file
+                "bam", # -f flag
+                "name", # default
+                30000000, # default
+                "no", # -s flag
+                "union", # -m flag
+                "all", # --nonunique flag
+                "score", # default
+                "score", # default
+                "exon", # -t flag
+                "gene_id", # -i flag, default
+                (), # Default
+                None, # default
+                10, # default
+                "" # default
+                )
+            outputString = buf.getvalue()
         ## Issue mentioned by Marko
         #outputString.replace("\n\t", ", ")
         gff3 = gff3File[:-5]
