@@ -68,16 +68,24 @@ Be sure you've generated your bedfiles -- they also generate the sorted q2 `*.ba
 
 You'll need to edit `do-htseq-counts.py`. Near the top of the file, after the docstring, you'll find a [python `dictionary` datatype object](https://docs.python.org/3/tutorial/datastructures.html#dictionaries) named `bamPrettyMap`.
 
-Edit this file to set the labels you desire as the dictionary key, and the  `*.sorted.q2.bam` filename as the key, for example:
+Edit this file to set the labels you desire as the (unique) dictionary key, and the  `*.sorted.q2.bam` filename as the value, for example:
 
 ```python
 bamPrettyMap = {
-    "CON1": "AT-A-10_S4_L001_BowtieOut.sorted.q2.bam",
-    "CON2": "AT-B-38_S22_BowtieOut.sorted.q2.bam"
+    "LYR_CD_CON2": "AT-A-11_S9_BowtieOut.sorted.q2.bam",
+    "LYR_CD_CON3": "AT-B-38_S22_BowtieOut.sorted.q2.bam",
+    "LYR_CD_DR1": "AT-A-16_S1_BowtieOut.sorted.q2.bam"
 }
 ```
+
+If your key has a underscore-separated prefix, it'll only match those samples against`gff3` files that contain that (case-sensitive) substring; eg, in the example above, only `*.gff3` containing `LYR` will be used for matching. If there is no underscore-separated prefix, no species matching will be used.
+
+By default, the file also has a configuration value `overwriteExistingCounts` set to `False`. Set this value to `True` to regenerate everything each time you run this script.
+
 Then, once you've done that, simply run
 
 ```bash
 python ./do-htseq-counts.py
 ```
+
+Counts will be output as both `csv` and `txt`.

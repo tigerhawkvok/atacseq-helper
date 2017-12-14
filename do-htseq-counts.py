@@ -12,6 +12,8 @@ https://github.com/simon-anders/htseq/blob/41ac2e51f64a1fb38129ceabf0f06a3e0e378
 
 # Label mapping: mandatory configuration needed!
 
+overwriteExistingCounts = False
+
 bamPrettyMap = {
     "LYR_CD_CON1": "AT-A-10_S4_L001.sorted.q2.bam",
     "LYR_CD_CON2": "AT-A-11_S9_BowtieOut.sorted.q2.bam",
@@ -42,11 +44,15 @@ dirName = "./CountingResults"
 if not os.path.exists(dirName):
     os.mkdir(dirName)
 else:
-    i = 0
-    for oldRead in glob.glob(dirName+"/*counts.txt"):
-        os.unlink(oldRead)
-        i += 1
-    print("Removed "+str(i)+" old counted reads")
+    # The output directory doesn't exist yet
+    if overwriteExistingCounts:
+        i = 0
+        for oldRead in glob.glob(dirName+"/*counts.txt"):
+            os.unlink(oldRead)
+            i += 1
+        print("Removed "+str(i)+" old counted reads")
+    else:
+        print("NOTICE: Your existing counts will be preserved and not ovewritten")
 
 
 
@@ -64,9 +70,15 @@ for gff3File in gff3Pool:
         break
     print("Doing counts against `"+gff3File+"`")
     for label, bamFile in bamPrettyMap.items():
+        gff3 = gff3File[:-5]
+        outFile = gff3 + "-" + label + "-counts.txt"
+        if os.path.exists(outFile):
+            filePool -= 1
+            print("FILE EXISTS: `"+outFile+"`. Skipping.")
+            badFileList.append([bamFile, "Counts already exist"])
         print("Counting file "+str(i + 1)+" of "+str(filePool))
         speciesMatch = label.split("_").pop(0)
-        if not speciesMatch in gff3File:
+        if not speciesMatch in gff3File and len(speciesMatch) > 0:
             print("\tSpecies "+speciesMatch+" does not match GFF3 `"+gff3File+"`, skipping")
             filePool -= 1
             continue
@@ -134,13 +146,31 @@ for gff3File in gff3Pool:
         # Remove messages
         print("\tTidying up the file...")
         outputStringClean = cleanupAlignmentMessages.sub("", outputString).strip()
-        gff3 = gff3File[:-5]
-        outFile = gff3 + "-" + label + "-counts.txt"
+        # Prepare for writing
         fullPath = dirName+"/"+outFile
         with open(fullPath, "w") as fileWriter:
             fileWriter.write(outputStringClean)
             print("Wrote counts to `"+fullPath+"`")
     print("Finish processing "+gff3File)
+# Convert all the raw outputs to CSV, if possible
+try:
+    import csv
+    for countsFilePath in glob.glob(dirName+"/*counts.txt"):
+        # Read the existing counts file
+        with open(countsFilePath) as countsFile:
+            csvPath = countsFilePath.replace("txt", "csv")
+            counts = countsFile.read()
+            # Open up a CSV for writing
+            with open(csvPath, "w") as csvFile:
+                countsWriter = csv.writer(csvFile, delimiter=",", quoting=csv.QUOTE_ALL)
+                # Split each new line to a new row
+                for row in counts.split("\n"):
+                    if len(row) is 0:
+                        continue
+                    # Separate out tab delimited stuff as columns
+                    countsWriter.writerow(row.split("\t"))
+except Exception:
+    print("Failed to save counts as CSV (the raw TXT files still exist)")
 # Final output
 print("Successfully processed "+str(i)+" files")
 if len(badFileList) > 0:
