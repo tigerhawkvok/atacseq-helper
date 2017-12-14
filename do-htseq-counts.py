@@ -68,6 +68,7 @@ for gff3File in gff3Pool:
         speciesMatch = label.split("_").pop(0)
         if not speciesMatch in gff3File:
             print("\tSpecies "+speciesMatch+" does not match GFF3 `"+gff3File+"`, skipping")
+            filePool -= 1
             continue
         ############################################
         # Default arguments and argument order interpreted from here:
@@ -137,7 +138,7 @@ for gff3File in gff3Pool:
         outFile = gff3 + "-" + label + "-counts.txt"
         fullPath = dirName+"/"+outFile
         with open(fullPath, "w") as fileWriter:
-            fileWriter.write(outputStringClean.trim())
+            fileWriter.write(outputStringClean)
             print("Wrote counts to `"+fullPath+"`")
     print("Finish processing "+gff3File)
 # Final output
