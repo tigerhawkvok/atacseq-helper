@@ -1,3 +1,11 @@
 {
-    "python.pythonPath": "/Users/DAW/miniconda3/bin/python"
+    "python.pythonPath": "/Users/DAW/miniconda3/bin/python",
+    "files.exclude": {
+        "**/*.bam": true,
+        "**/*.bai": true,
+        "**/*.sam": true,
+        "**/*.bed": true,
+        "**/*.gff3": true,
+        "**/*.gz": true
+    }
 }
