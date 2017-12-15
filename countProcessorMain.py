@@ -1,6 +1,6 @@
 #!python3
 import rpy2
-from rpy2.objects import robjects
+import rpy2.robjects as robjects
 import os
 import glob
 import re
