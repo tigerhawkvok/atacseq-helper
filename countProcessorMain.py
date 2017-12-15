@@ -24,6 +24,7 @@ for gff3 in gff3Files:
         # We're only examining count files that have names matching
         # the gff3, since that's how we're grouping them
         countFileName = os.path.split(countFile)[1]
+        countFileName = countFileName.replace("-counts","") # We don't need or want counts in the name
         groupList.append("'"+os.path.splitext(countFileName)[0]+"'")
     distinctConditions = list()
     conditionLabel = list()
