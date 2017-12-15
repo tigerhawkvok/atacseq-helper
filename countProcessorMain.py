@@ -26,6 +26,9 @@ for gff3 in gff3Files:
         countFileName = os.path.split(countFile)[1]
         countFileName = countFileName.replace("-counts","") # We don't need or want counts in the name
         groupList.append("'"+os.path.splitext(countFileName)[0]+"'")
+    if len(groupList) is 0:
+        print("No files found for "+gff3File)
+        continue
     distinctConditions = list()
     conditionLabel = list()
     for fileRoot in groupList:
