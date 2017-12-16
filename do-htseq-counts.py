@@ -21,12 +21,15 @@ bamPrettyMap = {
     "LYR_CD_DR1": "AT-A-16_S1_BowtieOut.sorted.q2.bam",
     "LYR_CD_DR2":"AT-A-18_S6_BowtieOut.sorted.q2.bam",
     "LYR_CD_DR3": "AT-B-17_S24_BowtieOut.sorted.q2.bam",
-    "LYR_CW_CON1":"AT-A-10_S4_L001_BowtieOut.sorted.q2.bam",
+    "LYR_CW_CON1":"AT-A-10_S4_L001.sorted.q2.bam",
     "LYR_CW_CON2":"AT-A-11_S9_BowtieOut.sorted.q2.bam",
     "LYR_CW_CON3":"AT-B-38_S22_BowtieOut.sorted.q2.bam",
     "LYR_CW_WL1" :"AT-A-14_S11_BowtieOut.sorted.q2.bam",
     "LYR_CW_WL2" :"AT-A-15_S5_BowtieOut.sorted.q2.bam",
-    "LYR_CW_WL3": "AT-B-13_S23_BowtieOut.sorted.q2.bam"
+    "LYR_CW_WL3": "AT-B-13_S23_BowtieOut.sorted.q2.bam",
+    "ATH_CD_CON1":"AT-A-20_S2_BowtieOut.sorted.q2.bam",
+    "ATH_CD_CON2":"AT-B-19_S30_BowtieOut.sorted.q2.bam",
+    "ATH_CD_CON3":"AT-B-21_S26_BowtieOut.sorted.q2.bam "
 
 }
 
