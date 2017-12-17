@@ -68,3 +68,9 @@ conda config --add channels bioconda
 conda install pysam
 conda install -c r rpy2
 conda install -c bioconda htseq
+# https://www.ebi.ac.uk/sites/ebi.ac.uk/files/groups/bertone/software/PeakAnnotator_Java_README
+wget https://www.ebi.ac.uk/sites/ebi.ac.uk/files/groups/bertone/software/PeakAnnotator_Java_1.4.tar.gz
+tar -xvzf PeakAnnotator_Java_1.4.tar.gz
+mv PeakAnnotator_Java_1.4/PeakAnnotator.jar ./
+rm -r PeakAnnotator_Java_1.4
+rm PeakAnnotator_Java_1.4.tar.gz
