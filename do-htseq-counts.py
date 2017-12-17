@@ -172,8 +172,16 @@ try:
                 for row in counts.split("\n"):
                     if len(row) is 0:
                         continue
+                    rowParts = row.split("\t")
+                    # Let's also create a length field and append it
+                    firstCountPosition = re.sub("^.*?:([0-9]+)-([0-9]+)\t[0-9]+$", r"\g<1>", rowParts[0], 0, re.IGNORECASE | re.MULTILINE)
+                    secondCountPosition = re.sub("^.*?:([0-9]+)-([0-9]+)\t[0-9]+$", r"\g<2>", rowParts[0], 0, re.IGNORECASE | re.MULTILINE)
+                    readSize = int(secondCountPosition) - int(firstCountPosition)
+                    rowParts.append(firstCountPosition)
+                    rowParts.append(secondCountPosition)
+                    rowParts.append(readSize)
                     # Separate out tab delimited stuff as columns
-                    countsWriter.writerow(row.split("\t"))
+                    countsWriter.writerow(rowParts)
 except Exception:
     print("Failed to save counts as CSV (the raw TXT files still exist)")
 # Final output
