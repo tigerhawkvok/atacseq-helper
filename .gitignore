@@ -8,8 +8,4 @@ pyDNase/*
 pyDNase
 pyDNase/
 *.gff3
-*-counts.txt
-CountingResults
-CountingResults/
-CountingResults/*
 *.*~
