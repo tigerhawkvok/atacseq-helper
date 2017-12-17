@@ -174,8 +174,8 @@ try:
                         continue
                     rowParts = row.split("\t")
                     # Let's also create a length field and append it
-                    firstCountPosition = re.sub("^.*?:([0-9]+)-([0-9]+)\t[0-9]+$", r"\g<1>", rowParts[0], 0, re.IGNORECASE | re.MULTILINE)
-                    secondCountPosition = re.sub("^.*?:([0-9]+)-([0-9]+)\t[0-9]+$", r"\g<2>", rowParts[0], 0, re.IGNORECASE | re.MULTILINE)
+                    firstCountPosition = re.sub("^.*?:([0-9]+)-([0-9]+)", r"\g<1>", rowParts[0], 0, re.IGNORECASE | re.MULTILINE)
+                    secondCountPosition = re.sub("^.*?:([0-9]+)-([0-9]+)", r"\g<2>", rowParts[0], 0, re.IGNORECASE | re.MULTILINE)
                     try:
                         readSize = int(secondCountPosition) - int(firstCountPosition)
                     except ValueError:
