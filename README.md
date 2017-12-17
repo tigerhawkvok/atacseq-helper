@@ -8,7 +8,9 @@ Your system MUST have Homebrew or Linuxbrew installed.
 - Linuxbrew: http://linuxbrew.sh/
 - Homebrew: https://brew.sh/
 
-The script `install-dependencies.sh` assumes you have that available.
+You must also have Java 1.5 or later installed (most Linux and Mac boxes do.)
+
+The script `install-dependencies.sh` assumes you have those dependencies available and will fail without them.
 
 ## Setup
 
