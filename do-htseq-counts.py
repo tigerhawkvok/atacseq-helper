@@ -76,7 +76,8 @@ for gff3File in gff3Pool:
     for label, bamFile in bamPrettyMap.items():
         gff3 = gff3File[:-5]
         outFile = gff3 + "-" + label + "-counts.txt"
-        if os.path.exists(outFile):
+        fullPath = dirName+"/"+outFile
+        if os.path.exists(fullPath):
             filePool -= 1
             print("\tFILE EXISTS: `"+outFile+"`. Skipping.")
             badFileList.append([bamFile, "Counts already exist"])
@@ -103,7 +104,7 @@ for gff3File in gff3Pool:
         # -t exon
         # -f bam
         ############################################
-        print("\tUsing BAM file `"+bamFile+"`")
+        print("\tUsing BAM file `"+bamFile+"`")        
         if not os.path.exists(bamFile):
             print("\t\tThe system couldn't locate the file, trying the next one ...")
             badFileList.append([bamFile,"Does Not Exist"])
@@ -151,8 +152,7 @@ for gff3File in gff3Pool:
         # Remove messages
         print("\tTidying up the file...")
         outputStringClean = cleanupAlignmentMessages.sub("", outputString).strip()
-        # Prepare for writing
-        fullPath = dirName+"/"+outFile
+        # Prepare for writing        
         with open(fullPath, "w") as fileWriter:
             fileWriter.write(outputStringClean)
             print("Wrote counts to `"+fullPath+"`")
