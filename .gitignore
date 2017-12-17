@@ -9,3 +9,5 @@ pyDNase
 pyDNase/
 *.gff3
 *.*~
+*.sqlite
+.*.txt
