@@ -14,7 +14,6 @@ export PATH="$HOME/miniconda3/bin:$PATH"
 echo 'export PATH="$HOME/miniconda3/bin:$PATH"' >> ~/.bash_profile 
 brew update
 # Install wget. We use this to download a few things.
-brew install wget
 # Install perl5 (OSX's perl is out of date)
 brew install perl
 PATH=/usr/local/Cellar/perl/perl5/bin:$PATH
@@ -65,4 +64,4 @@ conda config --add channels r
 conda config --add channels defaults
 conda config --add channels conda-forge
 conda config --add channels bioconda
-conda install pysam
+conda install pysam 
