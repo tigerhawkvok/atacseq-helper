@@ -160,17 +160,25 @@ for gff3File in gff3Pool:
 # Convert all the raw outputs to CSV, if possible
 try:
     import csv
+    import numpy as np
+    totalReadSizes = list()
+    readSizesBySpecies = {}
     for countsFilePath in glob.glob(dirName+"/*counts.txt"):
         # Read the existing counts file
         with open(countsFilePath) as countsFile:
             csvPath = countsFilePath.replace("txt", "csv")
             counts = countsFile.read()
+            species = countsFilePath.split("-").pop(1)
+            try:
+                currentSpeciesList = readSizesBySpecies[species]
+            except KeyError:
+                readSizesBySpecies[species] = list()
+                currentSpeciesList = list()
             # Open up a CSV for writing
             with open(csvPath, "w") as csvFile:
                 countsWriter = csv.writer(csvFile, delimiter=",", quoting=csv.QUOTE_ALL)
                 # Split each new line to a new row
                 readTracker = list()
-                import numpy as np
                 readSizeTracker = list()
                 for row in counts.split("\n"):
                     if len(row) is 0:
@@ -182,6 +190,8 @@ try:
                     try:
                         readSize = int(secondCountPosition) - int(firstCountPosition)
                         readSizeTracker.append(readSize)
+                        totalReadSizes.append(readSize)
+                        currentSpeciesList.append(readSize)
                     except ValueError:
                         continue
                     rowParts.append(firstCountPosition)
@@ -205,6 +215,24 @@ try:
                     realRow.append(realRow[4] / averageReadSize)
                     # Separate out tab delimited stuff as columns
                     countsWriter.writerow(realRow)
+    with open(dirName+"/AVG_TOTALS_OVER_ALL_SPECIES.csv", "w") as totalsCSV:
+        totalsWriter = csv.writer(totalsCSV, delimiter=",", quoting=csv.QUOTE_ALL)
+        averageReadSize = np.average(totalReadSizes)
+        headers = [
+            "Species",
+            "Average Read Size Across All",
+            "Average Read Size Species",
+            "Ratio"
+        ]
+        totalsWriter.writerow(headers)
+        for species, readSizes in readSizesBySpecies.items():
+            row = [
+                species,
+                averageReadSize,
+                np.average(readSizes),
+                np.average(readSizes) / averageReadSize
+            ]
+            totalsWriter.writerow(row)
 except Exception as e:
     print("Failed to save counts as CSV (the raw TXT files still exist)")
     print("Error: "+str(e))
