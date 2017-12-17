@@ -66,3 +66,5 @@ conda config --add channels defaults
 conda config --add channels conda-forge
 conda config --add channels bioconda
 conda install pysam
+conda install -c r rpy2
+conda install -c bioconda htseq
