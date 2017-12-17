@@ -163,6 +163,7 @@ try:
     import numpy as np
     totalReadSizes = list()
     readSizesBySpecies = {}
+    readSizesByTest = {}
     for countsFilePath in glob.glob(dirName+"/*counts.txt"):
         # Read the existing counts file
         with open(countsFilePath) as countsFile:
@@ -174,6 +175,8 @@ try:
             except KeyError:
                 readSizesBySpecies[species] = list()
                 currentSpeciesList = list()
+            testKey = csvPath.replace("-counts.csv", "").replace(dirName+"/", "")
+            readSizesByTest[testKey] = list()
             # Open up a CSV for writing
             with open(csvPath, "w") as csvFile:
                 countsWriter = csv.writer(csvFile, delimiter=",", quoting=csv.QUOTE_ALL)
@@ -192,6 +195,7 @@ try:
                         readSizeTracker.append(readSize)
                         totalReadSizes.append(readSize)
                         currentSpeciesList.append(readSize)
+                        readSizesByTest[testKey].append(readSize)
                     except ValueError:
                         continue
                     rowParts.append(firstCountPosition)
@@ -215,6 +219,30 @@ try:
                     realRow.append(realRow[4] / averageReadSize)
                     # Separate out tab delimited stuff as columns
                     countsWriter.writerow(realRow)
+    print("Generating test averages...")
+    with open(dirName+"/AVG_TOTALS_OVER_ALL_TESTS.csv", "w") as totalsCSV:
+        totalsWriter = csv.writer(totalsCSV, delimiter=",", quoting=csv.QUOTE_ALL)
+        averageReadSize = np.average(totalReadSizes)
+        headers = [
+            "Species",
+            "Test",
+            "Average Read Size Across All Tests",
+            "Average Read Size This Test",
+            "Ratio"
+        ]
+        totalsWriter.writerow(headers)
+        for test, readSizes in readSizesByTest.items():
+            species = test.split("-").pop(1)
+            averageReadSize = np.average(readSizesBySpecies[species])
+            row = [
+                species,
+                test,
+                averageReadSize,
+                np.average(readSizes),
+                np.average(readSizes) / averageReadSize
+            ]
+            totalsWriter.writerow(row)
+    print("Done.\nGenerating species averages...")
     with open(dirName+"/AVG_TOTALS_OVER_ALL_SPECIES.csv", "w") as totalsCSV:
         totalsWriter = csv.writer(totalsCSV, delimiter=",", quoting=csv.QUOTE_ALL)
         averageReadSize = np.average(totalReadSizes)
