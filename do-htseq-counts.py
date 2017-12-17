@@ -176,14 +176,18 @@ try:
                     # Let's also create a length field and append it
                     firstCountPosition = re.sub("^.*?:([0-9]+)-([0-9]+)\t[0-9]+$", r"\g<1>", rowParts[0], 0, re.IGNORECASE | re.MULTILINE)
                     secondCountPosition = re.sub("^.*?:([0-9]+)-([0-9]+)\t[0-9]+$", r"\g<2>", rowParts[0], 0, re.IGNORECASE | re.MULTILINE)
-                    readSize = int(secondCountPosition) - int(firstCountPosition)
+                    try:
+                        readSize = int(secondCountPosition) - int(firstCountPosition)
+                    except ValueError:
+                        readSize = "Bad Read Size"
                     rowParts.append(firstCountPosition)
                     rowParts.append(secondCountPosition)
                     rowParts.append(readSize)
                     # Separate out tab delimited stuff as columns
                     countsWriter.writerow(rowParts)
-except Exception:
+except Exception as e:
     print("Failed to save counts as CSV (the raw TXT files still exist)")
+    print("Error: "+str(e))
 # Final output
 print("Successfully processed "+str(i)+" files")
 if len(badFileList) > 0:
