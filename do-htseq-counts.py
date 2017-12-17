@@ -29,7 +29,7 @@ bamPrettyMap = {
     "LYR_CW_WL3": "AT-B-13_S23_BowtieOut.sorted.q2.bam",
     "ATH_CD_CON1":"AT-A-20_S2_BowtieOut.sorted.q2.bam",
     "ATH_CD_CON2":"AT-B-19_S30_BowtieOut.sorted.q2.bam",
-    "ATH_CD_CON3":"AT-B-21_S26_BowtieOut.sorted.q2.bam "
+    "ATH_CD_CON3":"AT-B-21_S26_BowtieOut.sorted.q2.bam"
 
 }
 
