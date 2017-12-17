@@ -169,6 +169,9 @@ try:
             with open(csvPath, "w") as csvFile:
                 countsWriter = csv.writer(csvFile, delimiter=",", quoting=csv.QUOTE_ALL)
                 # Split each new line to a new row
+                readTracker = list()
+                import numpy as np
+                readSizeTracker = list()
                 for row in counts.split("\n"):
                     if len(row) is 0:
                         continue
@@ -178,13 +181,30 @@ try:
                     secondCountPosition = re.sub("^.*?:([0-9]+)-([0-9]+)", r"\g<2>", rowParts[0], 0, re.IGNORECASE | re.MULTILINE)
                     try:
                         readSize = int(secondCountPosition) - int(firstCountPosition)
+                        readSizeTracker.append(readSize)
                     except ValueError:
-                        readSize = "Bad Read Size"
+                        continue
                     rowParts.append(firstCountPosition)
                     rowParts.append(secondCountPosition)
                     rowParts.append(readSize)
+                    readTracker.append(rowParts)
+                # Now we want to do math over things
+                averageReadSize = np.average(readSizeTracker)
+                header = [
+                    "Read",
+                    "Counts",
+                    "Read Position Start",
+                    "Read Position End",
+                    "Read Size (rs)",
+                    "Mean Read Size (mrs)",
+                    "mrs/rs"
+                ]
+                countsWriter.writerow(header)
+                for realRow in readTracker:
+                    realRow.append(averageReadSize)
+                    realRow.append(realRow[4] / averageReadSize)
                     # Separate out tab delimited stuff as columns
-                    countsWriter.writerow(rowParts)
+                    countsWriter.writerow(realRow)
 except Exception as e:
     print("Failed to save counts as CSV (the raw TXT files still exist)")
     print("Error: "+str(e))
